@@ -20,6 +20,9 @@ const exerciseSchema = new Schema({
   examplePinin: {
     type: String,
   },
+  type: {
+    type: String,
+  },
   image: {
     type: String,
     required: false,
@@ -27,6 +30,9 @@ const exerciseSchema = new Schema({
   audio: {
     type: String,
   },
+  nameType:{
+    type:String
+  }
 });
 
 module.exports = mongoose.model("Exercise", exerciseSchema);

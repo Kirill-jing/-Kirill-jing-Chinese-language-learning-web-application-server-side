@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const adminRoutes = require("./routes/admin-routes");
+const userRoutes = require("./routes/auth-route");
 const app = express();
 const multer = require("multer");
 const path = require("path");
@@ -22,6 +23,7 @@ app.use(bodyParser.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/audios", express.static(path.join(__dirname, "audios")));
 app.use("/admin", adminRoutes);
+app.use("/user", userRoutes);
 
 mongoose
   .connect(process.env.DB_CONNECTION, {
