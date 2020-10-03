@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const exerciseSchema = new Schema({
+const cartSchema = new Schema({
   name: {
     type: String,
   },
@@ -33,6 +33,11 @@ const exerciseSchema = new Schema({
   nameType: {
     type: String,
   },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
-module.exports = mongoose.model("Exercise", exerciseSchema);
+module.exports = mongoose.model("Cart", cartSchema);

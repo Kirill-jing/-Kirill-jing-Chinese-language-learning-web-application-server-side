@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { schema } = require("./Exercise");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -14,6 +15,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  yourwords: [],
 });
 
 module.exports = mongoose.model("User", userSchema);

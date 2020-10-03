@@ -1,5 +1,6 @@
 const Exercise = require("../models/Exercise");
-
+const Cart = require("../models/Cart");
+const User = require("../models/User");
 exports.adminPost = (req, res, next) => {
   let name = req.body.name;
   let nameTr = req.body.nameTr;
@@ -34,7 +35,59 @@ exports.getWord = (req, res, next) => {
   });
 };
 
-exports.adminCart = (req, res, next) => {
+// exports.adminCart = (req, res, next) => {
+//   let id = req.params.id;
+//   let creator;
+//   return Exercise.findById(id)
+//     .then((res) => {
+//       let cart = new Cart({
+//         name: res.name,
+//         nameTr: res.nameTr,
+//         pinin: res.pinin,
+//         image: res.image,
+//         example: res.example,
+//         exampleTr: res.exampleTr,
+//         type: res.type,
+//         nameType: res.nameType,
+//         examplePinin: res.examplePinin,
+//         audio: res.audio,
+//         creator: req.userId,
+//       });
+//       cart
+//         .save()
+//         .then((word) => {
+//           return User.findById(req.userId);
+//         })
+//         .then((user) => {
+//           creator = user;
+//           user.yourwords.push(cart);
+//           return user.save();
+//         });
+//     })
+//     .then((resul) => {
+//       res.status(200).json({
+//         message: "added",
+//       });
+//     });
+// };
+exports.adminCart = (req, res, nex) => {
   let id = req.params.id;
-  Exercise.findById(id).then((res) => console.log(res));
+  Exercise.findById(id)
+    .then((exercise) => {
+      return User.findById(req.userId).then((user) => {
+        user.yourwords.push(exercise);
+        return user.save();
+      });
+    })
+    .then((resul) => {
+      console.log(resul);
+      res.status(200).json({
+        message: "added",
+      });
+    });
+};
+exports.getCart = (req, res, nex) => {
+  User.findById(req.userId).then((user) => {
+    res.json({ cart: user.yourwords });
+  });
 };

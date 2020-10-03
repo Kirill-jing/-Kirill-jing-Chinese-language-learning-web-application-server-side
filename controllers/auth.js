@@ -50,7 +50,7 @@ exports.login = (req, res, next) => {
       }
       const token = jwt.sign(
         { username: loadedUser.username, id: loadedUser._id.toString() },
-        "secret",
+        "secretKey",
         { expiresIn: "10h" }
       );
       res.status(200).json({
