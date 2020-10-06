@@ -91,3 +91,29 @@ exports.getCart = (req, res, nex) => {
     res.json({ cart: user.yourwords });
   });
 };
+
+exports.postMultiple = (req, res, next) => {
+  console.log(req.userId);
+  let b;
+  let cartArr = req.body.checkedArr;
+  console.log(cartArr);
+  Exercise.find()
+    .then((exers) => {
+      return exers.filter((el) => {
+        for (let i = 0; i <= cartArr.length; i++) {
+          if (cartArr[i] == el._id) {
+            return true;
+          }
+        }
+      });
+    })
+    .then((finalEx) =>
+      User.findById(req.userId).then((user) => {
+        finalEx.map((elem) => {
+          user.yourwords.push(elem);
+        });
+        return user.save();
+      })
+    )
+    .then((resul) => res.status(200).json({ message: "referer" }));
+};

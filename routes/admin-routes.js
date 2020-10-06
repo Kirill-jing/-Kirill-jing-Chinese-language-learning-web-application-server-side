@@ -12,4 +12,6 @@ router.get("/get-word", adminControllers.getWord);
 
 router.get("/get-cart", auth, adminControllers.getCart);
 
+router.post("/multiple-words", auth, adminControllers.postMultiple);
+
 module.exports = router;
