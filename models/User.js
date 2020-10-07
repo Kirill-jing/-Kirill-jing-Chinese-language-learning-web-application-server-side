@@ -15,7 +15,12 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  yourwords: [],
+  yourwords: [
+    {
+      type: Schema.Types.ObjectId,
+      red: "Exercise",
+    },
+  ],
 });
 
 module.exports = mongoose.model("User", userSchema);

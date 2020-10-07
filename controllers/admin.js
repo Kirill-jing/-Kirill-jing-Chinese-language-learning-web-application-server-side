@@ -75,7 +75,7 @@ exports.adminCart = (req, res, nex) => {
   Exercise.findById(id)
     .then((exercise) => {
       return User.findById(req.userId).then((user) => {
-        user.yourwords.push(exercise);
+        user.yourwords.add(exercise);
         return user.save();
       });
     })
@@ -86,17 +86,9 @@ exports.adminCart = (req, res, nex) => {
       });
     });
 };
-exports.getCart = (req, res, nex) => {
-  User.findById(req.userId).then((user) => {
-    res.json({ cart: user.yourwords });
-  });
-};
 
 exports.postMultiple = (req, res, next) => {
-  console.log(req.userId);
-  let b;
   let cartArr = req.body.checkedArr;
-  console.log(cartArr);
   Exercise.find()
     .then((exers) => {
       return exers.filter((el) => {
@@ -110,10 +102,31 @@ exports.postMultiple = (req, res, next) => {
     .then((finalEx) =>
       User.findById(req.userId).then((user) => {
         finalEx.map((elem) => {
-          user.yourwords.push(elem);
+          if (
+            user.yourwords.every((el) => el.toString() !== elem._id.toString())
+          ) {
+            user.yourwords.push(elem);
+          } else {
+            console.log("already have");
+            return;
+          }
         });
         return user.save();
       })
     )
     .then((resul) => res.status(200).json({ message: "referer" }));
+};
+
+exports.getCart = (req, res, nex) => {
+  User.findById(req.userId)
+    .then((user) => {
+      return Exercise.find().then((exers) => {
+        return exers.filter((el) => {
+          return user.yourwords.some(
+            (elem) => elem.toString() === el._id.toString()
+          );
+        });
+      });
+    })
+    .then((words) => res.json({ cart: words }));
 };
