@@ -14,4 +14,6 @@ router.get("/get-cart", auth, adminControllers.getCart);
 
 router.post("/multiple-words", auth, adminControllers.postMultiple);
 
+router.post("/delete-word/:id", auth, adminControllers.deleteWord);
+
 module.exports = router;
