@@ -109,3 +109,19 @@ exports.deleteWord = (req, res, next) => {
     })
     .then((resp) => res.json({ data: resp.yourwords }));
 };
+
+exports.deleteMultWords=(req,res,next)=>{
+  let removeArr= req.body.removeArr
+  User.findById(req.userId).then(user=>{
+    user.yourwords.forEach((el,index,arr)=>{
+      for(let i=0;i<=removeArr.length;i++){
+        if(el.toString()===removeArr[i]){
+           arr.splice(index,1)
+        }
+      }
+    })
+   return user.save()
+  }).then(user=>res.status(200).json({
+    message:"rrrr"
+  }))
+}
