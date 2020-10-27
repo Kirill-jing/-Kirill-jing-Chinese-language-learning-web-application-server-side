@@ -26,7 +26,7 @@ app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 
 mongoose
-  .connect(process.env.DB_CONNECTION, {
+  .connect(`mongodb+srv://${process.env.DB}:${process.env.DB_PASSWORD}@cluster0-sj8wi.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,

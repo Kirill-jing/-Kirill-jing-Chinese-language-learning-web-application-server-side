@@ -19,7 +19,7 @@ exports.signup = (req, res, next) => {
     .then((result) => {
       const token = jwt.sign(
         { email: result.email, id: result._id.toString() },
-        "secretKey",
+        process.env.JWT,
         { expiresIn: "10h" }
       );
       res.status(201).json({ token: token, userId: result._id });
@@ -50,7 +50,7 @@ exports.login = (req, res, next) => {
       }
       const token = jwt.sign(
         { username: loadedUser.username, id: loadedUser._id.toString() },
-        "secretKey",
+        process.env.JWT,
         { expiresIn: "10h" }
       );
       res.status(200).json({

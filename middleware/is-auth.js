@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
-
+require("dotenv/config");
 module.exports = (req, res, next) => {
   const token = req.get("Authorization").split(" ")[1];
-  console.log(token);
+  let key = process.env.JWT;
   let decToken;
   try {
-    decToken = jwt.verify(token, "secretKey");
+    decToken = jwt.verify(token, key);
   } catch (err) {
     err.statusCode = 500;
     throw err;
