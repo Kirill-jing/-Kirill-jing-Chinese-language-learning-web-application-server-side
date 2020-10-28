@@ -1,0 +1,8 @@
+{
+    "env":{
+        "DB":"prima",
+        "DB_PASSWORD":"5555555555",
+        "DB_NAME":"translator",
+        "JWT":"secretKey"
+    }
+}
