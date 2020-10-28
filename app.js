@@ -26,13 +26,16 @@ app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 
 mongoose
-  .connect(`mongodb+srv://${process.env.DB}:${process.env.DB_PASSWORD}@cluster0-sj8wi.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    `mongodb+srv://${process.env.DB}:${process.env.DB_PASSWORD}@cluster0-sj8wi.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
+    {
+      useCreateIndex: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
-    app.listen(5004);
+    app.listen(process.env.PORT || 5004);
     console.log("connect");
   })
   .catch((err) => {
