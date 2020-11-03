@@ -6,6 +6,13 @@ exports.signup = (req, res, next) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
+  User.findOne({ email: email }).then((user) => {
+    if (user) {
+      return res.status(409).json({
+        message: "user already exists",
+      });
+    }
+  });
   bcrypt
     .hash(password, 12)
     .then((hashedPw) => {

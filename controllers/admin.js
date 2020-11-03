@@ -110,15 +110,33 @@ exports.deleteWord = (req, res, next) => {
     .then((resp) => res.json({ data: resp.yourwords }));
 };
 
-exports.deleteMultWords=(req,res,next)=>{
-  let removeArr= req.body.removeArr
-  User.findById(req.userId).then(user=>{
-    return user.yourwords.filter(el=>{
-      return removeArr.every(elem=>elem!==el.toString())
-   })
-  }).then(wordsarr=> {
-    return User.findByIdAndUpdate(req.userId,{yourwords:wordsarr})
-  }).then(user=>
-    res.status(200)
-    .json({message:'dekleted'}))
-}
+exports.deleteMultWords = (req, res, next) => {
+  let removeArr = req.body.removeArr;
+  User.findById(req.userId)
+    .then((user) => {
+      return user.yourwords.filter((el) => {
+        return removeArr.every((elem) => elem !== el.toString());
+      });
+    })
+    .then((wordsarr) => {
+      return User.findByIdAndUpdate(req.userId, { yourwords: wordsarr });
+    })
+    .then((user) => res.status(200).json({ message: "dekleted" }));
+};
+
+exports.sliderData = (req, res, next) => {
+  let data = req.body.dbArr;
+  console.log(data);
+  User.findById(req.userId)
+    .then((user) => {
+      data.forEach((el) => {
+        if (user.yourwords.every((elem) => elem.toString() !== el)) {
+          user.yourwords.push(el);
+        } else {
+          return;
+        }
+      });
+      return user.save();
+    })
+    .then((resp) => res.json({ message: "fgdsg" }));
+};

@@ -16,6 +16,8 @@ router.post("/multiple-words", auth, adminControllers.postMultiple);
 
 router.post("/delete-word/:id", auth, adminControllers.deleteWord);
 
-router.post("/delete-multwords",auth,adminControllers.deleteMultWords)
+router.post("/delete-multwords", auth, adminControllers.deleteMultWords);
+
+router.post("/slider-data", auth, adminControllers.sliderData);
 
 module.exports = router;
